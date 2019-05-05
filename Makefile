@@ -4,8 +4,9 @@ BUILD_DEBUG = yes
 export FOO=FOO
 SRCS := $(wildcard src/*.c)
 OBJS := $(SRCS:.c=.o)
-
-# cc = gcc
+CFLAGS := -I./include
+LDFLAGS := -L./lib -lsecp256k1
+cc = gcc
 
 # main: main.o
 # 	$(cc) -o main main.o
@@ -20,10 +21,10 @@ $(info $(shell FOO=$(FOO) printenv | grep FOO))
 .PHONY = all clean
 
 all: $(OBJS)
-	gcc -o main $<
+	$(cc) $(LDFLAGS) -o main $<
 
 %.o: %.c
-	$(COMPILE.C) -o $@ $<
+	$(cc) $(CFLAGS) -c $< -o $@
 
 clean:
 	@rm -f src/*.o
