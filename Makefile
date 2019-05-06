@@ -8,12 +8,6 @@ CFLAGS := -I./include
 LDFLAGS := -L./lib -lsecp256k1
 cc = gcc
 
-# main: main.o
-# 	$(cc) -o main main.o
-
-# main.o: main.c
-# 	$(cc) -c $< -o $@
-
 $(info $(FOO) $(origin FOO))
 $(info $(BUILD_DEBUG) $(origin BUILD_DEBUG))
 $(info $(shell FOO=$(FOO) printenv | grep FOO))
@@ -21,7 +15,7 @@ $(info $(shell FOO=$(FOO) printenv | grep FOO))
 .PHONY = all clean
 
 all: $(OBJS)
-	$(cc) $(LDFLAGS) -o main $<
+	$(cc) $(LDFLAGS) -o main $^
 
 %.o: %.c
 	$(cc) $(CFLAGS) -c $< -o $@
